@@ -39,9 +39,9 @@ def main():
     driver.get(
         "https://community.aspireiq.com/client/Fo9cITmb9lG60RzwcppmtMEG7RCCYcKI/app/KyXOg4RiEupXxAFkWh3qnud6nX3tIWb4")
 
-    # Pause for 5 seconds so you can visually confirm the page is loaded
-    print("Pausing for 5 seconds to confirm the page is loaded.")
-    time.sleep(5)
+    # Pause for 8 seconds so you can visually confirm the page is loaded
+    print("Pausing for 8 seconds to confirm the page is loaded.")
+    time.sleep(8)
 
     # Step 3: Apply the follower, likes, age filters, gender selection, locations, and languages
     print(
