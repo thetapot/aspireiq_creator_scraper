@@ -5,6 +5,29 @@ from selenium.webdriver.common.keys import Keys
 import time
 
 
+def input_keyword(driver, keyword):
+    """
+    This function inputs a keyword in the first text input field.
+    It deletes any existing content by pressing backspace and then inputs the keyword.
+    """
+    try:
+        # Locate the first text input (search bar) and clear its content
+        keyword_input = driver.find_elements(By.CLASS_NAME, "_input_c76r6_251")[0]  # First occurrence
+        keyword_input.click()
+        keyword_input.send_keys(Keys.CONTROL + "a")  # Select all text (Command + A for macOS)
+        keyword_input.send_keys(Keys.BACKSPACE)  # Delete current text
+        time.sleep(1)  # Short pause
+
+        # Input the new keyword
+        keyword_input.send_keys(keyword)
+        keyword_input.send_keys(Keys.ENTER)
+        print(f"Keyword '{keyword}' set.")
+        time.sleep(1)  # Short pause to let the changes apply
+
+    except Exception as e:
+        print(f"Error setting keyword: {e}")
+
+
 def select_gender(driver, gender_choice):
     """
     This function selects the gender radio button based on the user's input: "All", "Male", or "Female".
@@ -104,15 +127,18 @@ def input_location_and_language(driver, locations, languages):
         print(f"Error setting language: {e}")
 
 
-def select_reach_and_engagement_filter(driver, min_follower, max_follower, min_like, max_like, age_options,
+def select_reach_and_engagement_filter(driver, keyword, min_follower, max_follower, min_like, max_like, age_options,
                                        gender_choice, locations, languages):
     """
     This function clicks the 'Reach & Engagement' and 'Creator Demographics' sections,
-    inputs the min_follower, max_follower, min_like, max_like values, and applies the filter.
+    inputs the keyword, min_follower, max_follower, min_like, max_like values, and applies the filter.
     It also selects the age checkboxes and gender radio button under 'Creator Demographics',
     and then manually types in multiple locations and languages, selecting the first suggestion for each.
     """
-    # Step 1: Open the 'Reach & Engagement' filter section
+    # Step 1: Input the keyword in the first text input field
+    input_keyword(driver, keyword)
+
+    # Step 2: Open the 'Reach & Engagement' filter section
     try:
         reach_engagement_button = driver.find_element(By.XPATH, "//span[contains(text(),'Reach & Engagement')]")
         reach_engagement_button.click()
@@ -121,7 +147,7 @@ def select_reach_and_engagement_filter(driver, min_follower, max_follower, min_l
         print(f"Error clicking 'Reach & Engagement' filter: {e}")
         return
 
-    # Step 2: Set the Min Followers
+    # Step 3: Set the Min Followers
     try:
         min_follower_input = driver.find_elements(By.CLASS_NAME, "_input_c76r6_251")[1]
         actions = ActionChains(driver)
@@ -134,7 +160,7 @@ def select_reach_and_engagement_filter(driver, min_follower, max_follower, min_l
         print(f"Error setting min follower count: {e}")
         return
 
-    # Step 3: Set the Max Followers
+    # Step 4: Set the Max Followers
     try:
         max_follower_input = driver.find_elements(By.CLASS_NAME, "_input_c76r6_251")[2]
         actions.double_click(max_follower_input).perform()
@@ -146,7 +172,7 @@ def select_reach_and_engagement_filter(driver, min_follower, max_follower, min_l
         print(f"Error setting max follower count: {e}")
         return
 
-    # Step 4: Set the Min Likes
+    # Step 5: Set the Min Likes
     try:
         min_like_input = driver.find_elements(By.CLASS_NAME, "_input_c76r6_251")[3]
         actions.double_click(min_like_input).perform()
@@ -158,7 +184,7 @@ def select_reach_and_engagement_filter(driver, min_follower, max_follower, min_l
         print(f"Error setting min likes count: {e}")
         return
 
-    # Step 5: Set the Max Likes
+    # Step 6: Set the Max Likes
     try:
         max_like_input = driver.find_elements(By.CLASS_NAME, "_input_c76r6_251")[4]
         actions.double_click(max_like_input).perform()
@@ -170,13 +196,13 @@ def select_reach_and_engagement_filter(driver, min_follower, max_follower, min_l
         print(f"Error setting max likes count: {e}")
         return
 
-    # Step 6: Select Creator Demographics (Age Groups and Gender)
+    # Step 7: Select Creator Demographics (Age Groups and Gender)
     select_creator_demographics(driver, age_options, gender_choice)
 
-    # Step 7: Input multiple locations and languages, selecting the first suggestion for each
+    # Step 8: Input multiple locations and languages, selecting the first suggestion for each
     input_location_and_language(driver, locations, languages)
 
-    # Step 8: Click the "Apply Search & Filters" button
+    # Step 9: Click the "Apply Search & Filters" button
     try:
         apply_button = driver.find_element(By.XPATH, "//div[contains(text(),'Apply Search & Filters')]")
         apply_button.click()

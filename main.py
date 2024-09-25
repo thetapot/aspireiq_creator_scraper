@@ -9,9 +9,12 @@ def main():
     # Step 1: Open the browser and wait for the user to close it (login step)
     open_and_wait_for_user_close()
 
+    # Define the keyword to search for
+    keyword = "fashion"
+
     # Define a single pair of min and max followers (6000 and 20,000)
     min_follower = 6000
-    max_follower = 8000
+    max_follower = 20000
 
     # Define a single pair of min and max likes (500 and 50,000)
     min_like = 500
@@ -43,10 +46,10 @@ def main():
     print("Pausing for 8 seconds to confirm the page is loaded.")
     time.sleep(8)
 
-    # Step 3: Apply the follower, likes, age filters, gender selection, locations, and languages
+    # Step 3: Apply the keyword, follower, likes, age filters, gender selection, locations, and languages
     print(
-        f"Applying filters: Followers between {min_follower} and {max_follower}, likes between {min_like} and {max_like}, age groups, gender ({gender_choice.title()}), locations ({locations}), and languages ({languages}).")
-    select_reach_and_engagement_filter(driver, min_follower, max_follower, min_like, max_like, age_options,
+        f"Applying filters: Keyword '{keyword}', Followers between {min_follower} and {max_follower}, likes between {min_like} and {max_like}, age groups, gender ({gender_choice.title()}), locations ({locations}), and languages ({languages}).")
+    select_reach_and_engagement_filter(driver, keyword, min_follower, max_follower, min_like, max_like, age_options,
                                        gender_choice, locations, languages)
 
     # Pause for 5 seconds after applying the filters so you can visually confirm the action
