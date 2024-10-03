@@ -10,7 +10,7 @@ Features
 - Error Handling: Gracefully handles errors during scraping and navigation.
 
 File Structure
-
+```
 aspire_scrape/
 │
 ├── main.py                 # Entry point of the program
@@ -18,7 +18,7 @@ aspire_scrape/
 ├── filters.py               # Handles filter setup (followers, likes, demographics, etc.)
 ├── scraper.py               # Handles scraping of creator details from multiple pages
 └── README.txt               # This file, detailing project setup and usage
-
+```
 Setup Instructions
 
 Prerequisites
